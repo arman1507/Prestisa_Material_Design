@@ -457,7 +457,7 @@
 <tbody>
           @foreach($wee as $p)
             <tr>
-                <td>{{$p->order_number}}</td>
+                <td type="button" class="btn btn-default">{{$p->order_number}}</td>
                 <td>{{$p->status}}</td>
                 <td>{{$p->total}}</td>
                 <td>{{$p->cashback}}</td>

@@ -18,6 +18,7 @@ class order extends Controller
     public function index()
     {
         $wee = DB::table('order')->where('customer_id','=',  auth()->user()->id)->get();
+     //   return modelorder::all();
         
         return view('piutang',compact('wee'));  //
     }
