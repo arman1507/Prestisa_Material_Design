@@ -55,3 +55,16 @@ Route::get('/riwayat/{ordernumber}', function($ordernumber){
 });
 
 });
+
+Route::get('/supplier/{id}', function($id){
+
+
+	$supp = DB::table('purchase_order')->where('supplier_id',$id)->selectRaw('supplier_id , avg(report_rating) AS report_rating, avg(flower_rating) AS flower_rating, avg(shipping_rating) as shipping_rating, count(complaint_notes) as complaint_notes')->groupby('supplier_id')->get();
+	return $supp;
+	/*$avgflow = modelpurchase_order::avg('flower_rating')->where('supplier_id',$id);
+	$avgship = modelpurchase_order::avg('shipping_rating')->where('supplier_id',$id);
+	$avgrep = modelpurchase_order::avg('report_rating')->where('supplier_id',$id);
+	$countcomp = modelpurchase_order::count('complaint_notes')->where('supplier_id',$id);
+
+	return $avgflow $avgship $avgrep, $countcomp;*/
+});
