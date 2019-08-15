@@ -59,7 +59,7 @@ Route::get('/riwayat/{ordernumber}', function($ordernumber){
 Route::get('/supplier/{id}', function($id){
 
 
-	$supp = DB::table('purchase_order')->where('supplier_id',$id)->selectRaw('supplier_id , avg(report_rating) AS report_rating, avg(flower_rating) AS flower_rating, avg(shipping_rating) as shipping_rating, count(complaint_notes) as complaint_notes')->groupby('supplier_id')->get();
+	$supp = DB::table('purchase_order')->where('supplier_id',$id)->selectRaw('supplier_id , avg(report_rating) AS report_rating, avg(flower_rating) AS flower_rating, avg(shipping_rating) as shipping_rating, count(complaint_notes) as complaint_notes, avg(flower_rating+report_rating+shipping_rating)/3 as summary')->groupby('supplier_id')->get();
 	return $supp;
 	/*$avgflow = modelpurchase_order::avg('flower_rating')->where('supplier_id',$id);
 	$avgship = modelpurchase_order::avg('shipping_rating')->where('supplier_id',$id);
@@ -68,3 +68,15 @@ Route::get('/supplier/{id}', function($id){
 
 	return $avgflow $avgship $avgrep, $countcomp;*/
 });
+
+Route::prefix('v1')->namespace('API')->group(function () {
+	// Login
+	Route::post('/login','AuthController@postLogin');
+	// Register
+	Route::post('/register','AuthController@postRegister');
+	// Protected with APIToken Middleware
+	Route::middleware('APIToken')->group(function () {
+	  // Logout
+	  Route::post('/logout','AuthController@postLogout');
+	});
+  });
