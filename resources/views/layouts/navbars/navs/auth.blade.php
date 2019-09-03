@@ -1,10 +1,10 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
-  <div class="container-fluid" style="position:fixed">
+  <div class="container-fluid" >
     <div class="navbar-wrapper">
       <a class="navbar-brand" href="#"></a>
     </div>
-    <button class="navbar-toggler"  type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" >
+    <button class="navbar-toggler"style="position:fixed"  type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" >
     <span class="sr-only">Toggle navigation</span>
     <span class="navbar-toggler-icon icon-bar"></span>
     <span class="navbar-toggler-icon icon-bar"></span>
