@@ -139,6 +139,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+        Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,

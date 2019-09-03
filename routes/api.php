@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use App\modelorder;
 use App\modelpurchase_order;
+use Spatie\QueryBuilder\QueryBuilder;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +56,38 @@ Route::get('/riwayat/{ordernumber}', function($ordernumber){
 	return $history;
 });
 
+});
+
+//untuk rating kecepatan pengiriman
+Route::get('/supplier', function(){
+
+
+	$supp = modelpurchase_order::selectRaw('product_name , avg(pengiriman) as pengiriman')->orderby('pengiriman','desc')->groupby('product_name')->take(3)->get();
+	
+	//	$supp = $supp->where('pengiriman','>=',5);
+	return $supp;
+});
+
+Route::get('/paging', function(){
+	/*cara penggunaan
+	gunakan url seperti contoh http://127.0.0.1:8000/api/paging?fields[purchase_order]=id&page[size]=1&filter[id]=5796
+
+	fields[purchase_order]=id => hanya menampilkan field id pada table purchase order
+	page[size]=1 =>menampilkan data hanya satu kali
+	filter[id]=5796 => menampilkan id dengan value 5796
+
+	*/
+	//$supp = modelpurchase_order::jsonPaginate();
+	$supp = QueryBuilder::for(modelpurchase_order::class)->allowedSorts('pengiriman')->allowedFilters('id', 'supplier_id')->allowedFields('id')->jsonPaginate();
+	
+	/* 
+	allowedSorts('pengiriman')=> agar table pengiriman dapat di sort
+	allowedFilters('id', 'supplier_id')=>agar table id dan supplier_id dapat di filter sesuai isi value.
+	allowedFields('id')=>hanya dapat menampilkan table id pada link api diatas. jika ingin menampilkan table lain, tambahkan lagi pada fungsinya.
+	jsonPaginate()=> untuk membuat page
+	*/
+	//	$supp = $supp->where('pengiriman','>=',5);
+	return $supp;
 });
 
 Route::get('/supplier/{id}', function($id){
